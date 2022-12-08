@@ -24,27 +24,120 @@
  * Dario Correal - Version inicial
  """
 
-
+from math import radians, cos, sin, asin, sqrt
 import config as cf
+from DISClib.Algorithms.Graphs import dijsktra as djk
+from DISClib.ADT import graph as gr
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
+from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
-from DISClib.Algorithms.Sorting import shellsort as sa
+from datetime import datetime
 assert cf
+from DISClib.Algorithms.Sorting import quicksort as quick
+from DISClib.Algorithms.Sorting import shellsort as shell
+from DISClib.Algorithms.Sorting import selectionsort as selection
+from DISClib.Algorithms.Sorting import insertionsort as insertion
+from DISClib.Algorithms.Sorting import mergesort as merge
+
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
 
-# Construccion de modelos
+def haversine(lon1, lat1, lon2, lat2):
+            """
+            Calculate the great circle distance in kilometers between two points 
+            on the earth (specified in decimal degrees)
+            """
+            # convert decimal degrees to radians 
+            lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
 
-# Funciones para agregar informacion al catalogo
+            # haversine formula 
+            dlon = lon2 - lon1 
+            dlat = lat2 - lat1 
+            a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+            c = 2 * asin(sqrt(a)) 
+            r = 6371 # Radius of earth in kilometers. Use 3956 for miles. Determines return value units.
+            return c * r
+        
 
-# Funciones para creacion de datos
+def add_carga_bus_stops(model, station, bus_route,line_archive):
+    # Agrega las estaciones y las Rutas de Bus
+    model.addStation(station)
+    model.addBusRoute(bus_route)
+    
+    if station.transbordo == "S":
+        
+        model.addGraphVertex("T-"+station.code)
+    
 
-# Funciones de consulta
 
-# Funciones utilizadas para comparar elementos dentro de una lista
+def add_carga_bus_edges(model, line_archive):
+   
+    inicio =model.getStationByCode(line_archive["Code"])
+    final = model.getStationByCode(line_archive["Code_Destiny"])
+    ##ruta =model.getBusByCode(line_archive["Bus_Stop"].replace('BUS-', ''))
+    id_ruta =line_archive["Bus_Stop"].replace('BUS-', '')
 
-# Funciones de ordenamiento
+    code_vertice_inicio =inicio.code + "-" + id_ruta
+    code_vertice_final = final.code + "-" + id_ruta
+    lat1, lon1 = float(inicio.latitud), float(inicio.longitud)
+    lat2, lon2 = float(final.latitud), float(final.longitud)
+
+    
+    model.addGraphVertex(code_vertice_inicio)
+    model.addGraphVertex(code_vertice_final)
+
+
+    peso = haversine(lon1, lat1, lon2, lat2)
+    #print(type(peso),peso)
+    #print("Agregando Arco ",code_vertice_inicio, code_vertice_final, 0)
+    model.addGraphEdge(code_vertice_inicio, code_vertice_final, peso)
+    model.addGraphEdge( code_vertice_final,code_vertice_inicio, peso)
+    #model.addGraphEdge( code_vertice_final,code_vertice_inicio, peso)
+    if inicio.transbordo == "S":
+        #print("Agregando Arco ",code_vertice_inicio,  "T-"+ inicio.code, peso)
+        model.addGraphEdge(code_vertice_inicio, "T-"+ inicio.code,0)
+        model.addGraphEdge("T-"+ inicio.code,code_vertice_inicio,0)
+    if final.transbordo == "S":
+        #print("Agregando Arco ",code_vertice_final,  "T-"+ final.code)
+        model.addGraphEdge(code_vertice_final, "T-"+ final.code, 0)
+        model.addGraphEdge("T-"+ final.code,code_vertice_final,  0)
+
+def requerimiento_1(model, origen, destino):
+    cola = None
+    if model.graphHasPathTo(origen, destino, "djk"):
+        cola, peso = model.graphPathTo(destino, "djk")
+    return cola, peso
+
+def requerimiento_2(model, origen, destino):
+    if model.graphHasPathTo(origen, destino, "bfs"):
+        cola, peso = model.graphPathTo(destino,"bfs")
+    return cola, peso
+    
+def requerimiento_3(model):
+    model.MapaKosaraju()
+    lista_valores, num_conected = model.GraphScc()
+    return lista_valores, num_conected
+    #for value in lt.iterator(lista_valores):
+        #print(value["cont"], value["num"], lt.size(value["vertices"]))
+
+def requerimiento_4(model, lonOrigen, latOrigen, lonDestino, latDestino):
+    station_origen = model.estacionMasCercana(lonOrigen, latOrigen)
+    station_destino= model.estacionMasCercana(lonDestino, latDestino)
+    verticeOrigen = model.buscarVertice(station_origen)
+    verticeDestino = model.buscarVertice(station_destino)
+    print("verticeOrigen:", verticeOrigen)
+    print("verticeDestino:", verticeDestino)
+
+    print(model.graphHasPathTo(verticeOrigen, verticeDestino, "djk"))
+    if model.graphHasPathTo(verticeOrigen, verticeDestino, "djk"):
+        print("Si hay camino" )
+        cola, peso = model.graphPathTo(verticeDestino,"djk")
+        return cola, peso
+    print("Si hay camino ",verticeOrigen,verticeDestino )
+
+def requerimiento_6(model, vertice_origen, vecindario_destino):
+    pass    
