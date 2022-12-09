@@ -117,7 +117,7 @@ def requerimiento_0():
     ###edges = model.getGraphEdgesList()    
     ###for e in lt.iterator(edges):
     ###    print(e["vertexA"]+","+str(round(e["weight"],2)) +", "+e["vertexB"])
-    print("numero arcos grafo:              ",lt.size(model.getGraphEdgesList()))
+    print("numero arcos grafo:               ",lt.size(model.getGraphEdgesList()))
 
 def print_primeros_y_ultimos(lista, funcion_de_impresion, num, True_or_False):
     
