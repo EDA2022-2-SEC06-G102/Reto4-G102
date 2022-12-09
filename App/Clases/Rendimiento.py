@@ -20,7 +20,7 @@ class Rendimiento:
         delta_time = self.deltaTime(stop_time, self.start_time)
 
         # finaliza el proceso para medir memoria
-        if self.memflag is True:
+        if self.memflag :
             stop_memory = self.getMemory()
             tracemalloc.stop()
             # calcula la diferencia de memoria

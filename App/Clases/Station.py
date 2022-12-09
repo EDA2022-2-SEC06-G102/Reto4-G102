@@ -12,6 +12,6 @@ class Station:
         return model.haversine(self.longitud, self.latitud, lon2, lat2)
         
     def __str__(self):
-        return  self.code +" "+ self.district_name+" "+self.transbordo
+        return  "Estacion: "+self.code +" "+ str(self.district_name)+" ("+str(self.neighborhood_name)+" ) "+self.transbordo
 
         
