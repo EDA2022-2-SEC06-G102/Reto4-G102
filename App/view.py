@@ -24,6 +24,7 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from DISClib.Algorithms.Sorting import quicksort as qs
 assert cf
 from Clases.Model import Model
 import time
@@ -76,10 +77,8 @@ def printList(lista):
         print(element)
 
 
-    
-
-
-
+def cmpstr(a,b):
+     return a < b
 
 def getModel(control) ->Model:
     return control["model"]
@@ -108,7 +107,9 @@ def requerimiento_0():
 
     #print(lt.size(lista_stops))
     print("-----------------------[vertces del grafo]-------------------")
-    printList(model.getGraphVertexList())
+    vertices_lt = model.getGraphVertexList()
+    vertices_lt = qs.sort(vertices_lt,cmpstr)
+    printList(vertices_lt)
     print("numero vertices grafo:            ",lt.size(model.getGraphVertexList()))
     ###print("-----------------------[arcos del grafo]-------------------")
     ###printList(model.getGraphEdgesList())
@@ -116,7 +117,7 @@ def requerimiento_0():
     ###edges = model.getGraphEdgesList()    
     ###for e in lt.iterator(edges):
     ###    print(e["vertexA"]+","+str(round(e["weight"],2)) +", "+e["vertexB"])
-    print("numero arcos grafo ",lt.size(model.getGraphEdgesList()))
+    print("numero arcos grafo:              ",lt.size(model.getGraphEdgesList()))
 
 def print_primeros_y_ultimos(lista, funcion_de_impresion, num, True_or_False):
     

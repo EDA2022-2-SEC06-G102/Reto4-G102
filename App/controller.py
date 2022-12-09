@@ -141,7 +141,7 @@ def loadData(control, file_size):
     for line_archive in input_file_1:
         station = Station(line_archive["Code"], float(line_archive["Latitude"]), float(line_archive["Longitude"]), line_archive["District_Name"], line_archive["Neighborhood_Name"], line_archive["Transbordo"])
         bus_route = BusRoute(line_archive["Bus_Stop"])
-        model.add_carga_bus_stops(modelClass,station, bus_route,line_archive)
+        model.add_carga_bus_stops(modelClass,line_archive["Code"],station, bus_route,line_archive)
         vertice = line_archive["Code"]+"-"+line_archive["Bus_Stop"].replace("BUS-","")
         modelClass.addGraphVertex(vertice)
         if line_archive["Transbordo"] == "S":
