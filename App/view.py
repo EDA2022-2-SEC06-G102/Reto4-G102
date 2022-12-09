@@ -88,6 +88,46 @@ def getModel(control) ->Model:
 #--------------------------------------------------------------------------------------------------------------------------------------------
 
 
+
+def imprimirRuta(cola, origen, destino = None):
+    if cola is None:
+        print("No encontro ruta desde ",origen, end ="" )
+        if destino is not None:
+            print(" hasta ",destino,end="")
+        print("")
+        return
+    
+    print("Ruta desde ",origen, end ="" )
+    if destino is not None:
+        print(" hasta ",destino,end="")
+    print("")
+        
+    peso = 0 
+    count = 0
+    transbordos = 0
+    model = getModel(control)
+    station = model.getStationByVertex(origen)
+    print("Partiendo desde ",station)
+    for element in lt.iterator(cola):
+        station = model.getStationByVertex(element["vertexB"])
+        if element["vertexB"].startswith("T-"):
+            print(element["vertexA"].ljust(10)," -> ",element["vertexB"].ljust(10),"Transbordo bajarse en ",station)
+            transbordos += 1
+        elif element["vertexA"].startswith("T-"):    
+            busid = element["vertexB"].split("-")[1]
+            print(element["vertexA"].ljust(10)," -> ",element["vertexB"].ljust(10),"Transbordo tomar ","BUS-"+busid," en ",station)
+        else:
+            print(element["vertexA"].ljust(10)," -> ",element["vertexB"].ljust(10), station)
+        peso = element["weight"]
+        count += 1
+    print("Distancia Total",peso, " Numero de paradas ",count,"Transbordos:",transbordos)        
+
+
+
+
+
+
+
 def requerimiento_0():
     print("Cargando información de los archivos ....")
     file_size = input("\nSeleccione el tamaño de la muestra:\n5pct\n10pct\n20pct\n30pct\n50pct\n80pct\nlarge\nsmall\n Seleccione una opción para continuar: ")
@@ -219,12 +259,8 @@ while True:
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
         vecindario_destino = str(input("El identificador del vecindario (Neighborhood) destino: "))
         cola, peso = controller.requerimiento_6(modelClass, vertice_origen, vecindario_destino)
-        if cola is not None:
-            print("Encontro la siguiente ruta")
-            for element in lt.iterator(cola):
-                print(element)
-        else:
-            print("No encontro ruta")
+        imprimirRuta(cola, vertice_origen, vecindario_destino)
+
     elif int(inputs[0]) == 7:
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
         controller.requerimiento_7(modelClass, vertice_origen)
