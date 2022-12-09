@@ -135,17 +135,24 @@ def loadData(control, file_size):
     bus_edges_bcn_file = cf.data_dir + 'Barcelona/bus_edges_bcn-utf8-' + file_size +'.csv'
     bus_stops_bcn_file = cf.data_dir + 'Barcelona/bus_stops_bcn-utf8-' + file_size +'.csv'
 
-    print("Cargando ",bus_stops_bcn_file)
+    print("Cargando STOPS ",bus_stops_bcn_file)
     input_file_1 = csv.DictReader(open(bus_stops_bcn_file, encoding='utf-8'))
     print("Procesando ",bus_stops_bcn_file, end="")
     for line_archive in input_file_1:
         station = Station(line_archive["Code"], float(line_archive["Latitude"]), float(line_archive["Longitude"]), line_archive["District_Name"], line_archive["Neighborhood_Name"], line_archive["Transbordo"])
         bus_route = BusRoute(line_archive["Bus_Stop"])
         model.add_carga_bus_stops(modelClass,station, bus_route,line_archive)
+        vertice = line_archive["Code"]+"-"+line_archive["Bus_Stop"].replace("BUS-","")
+        modelClass.addGraphVertex(vertice)
+        if line_archive["Transbordo"] == "S":
+            modelClass.addGraphEdge(vertice, "T-"+ line_archive["Code"],0)
+            modelClass.addGraphEdge("T-"+ line_archive["Code"],vertice,0)
+
+
     input_file_1 = None
     print("\rProcesado ",bus_stops_bcn_file)
 
-    print("Cargando ",bus_edges_bcn_file)
+    print("Cargando EDGES ",bus_edges_bcn_file)
     input_file_2 = csv.DictReader(open(bus_edges_bcn_file, encoding='utf-8'))
     print("Procesando ",bus_edges_bcn_file,end="")
     for line_archive in input_file_2:

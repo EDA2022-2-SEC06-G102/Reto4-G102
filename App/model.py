@@ -68,13 +68,31 @@ def add_carga_bus_stops(model, station, bus_route,line_archive):
     model.addStation(station)
     model.addBusRoute(bus_route)
     if station.transbordo == "S":
-        
         model.addGraphVertex("T-"+station.code)
     
 
 
 def add_carga_bus_edges(model, line_archive):
+    inicio  = line_archive["Code"]
+    final   = line_archive["Code_Destiny"]
+    id_ruta =line_archive["Bus_Stop"].replace('BUS-', '')
+
+    vertice_inicio = inicio+"-"+id_ruta
+    vertice_final  = final+"-"+id_ruta
+
+    #model.addGraphVertex(inicio)
+    #model.addGraphVertex(final)
+
+    st_inicio =model.getStationByCode(line_archive["Code"])
+    st_final = model.getStationByCode(line_archive["Code_Destiny"])
+    lat1, lon1 = float(st_inicio.latitud), float(st_inicio.longitud)
+    lat2, lon2 = float(st_final.latitud) , float(st_final.longitud)
+    peso = haversine(lon1, lat1, lon2, lat2)
+    model.addGraphEdge(vertice_inicio, vertice_final, peso)
+    model.addGraphEdge(vertice_final,vertice_inicio, peso)
    
+
+    '''
     inicio =model.getStationByCode(line_archive["Code"])
     final = model.getStationByCode(line_archive["Code_Destiny"])
     ##ruta =model.getBusByCode(line_archive["Bus_Stop"].replace('BUS-', ''))
@@ -85,10 +103,8 @@ def add_carga_bus_edges(model, line_archive):
     lat1, lon1 = float(inicio.latitud), float(inicio.longitud)
     lat2, lon2 = float(final.latitud), float(final.longitud)
 
-    
     model.addGraphVertex(code_vertice_inicio)
     model.addGraphVertex(code_vertice_final)
-
 
     peso = haversine(lon1, lat1, lon2, lat2)
     #print(type(peso),peso)
@@ -104,6 +120,7 @@ def add_carga_bus_edges(model, line_archive):
         #print("Agregando Arco ",code_vertice_final,  "T-"+ final.code)
         model.addGraphEdge(code_vertice_final, "T-"+ final.code, 0)
         model.addGraphEdge("T-"+ final.code,code_vertice_final,  0)
+    '''
 
 def requerimiento_1(model, origen, destino):
     cola = None

@@ -98,7 +98,7 @@ class Model:
     def getTransbordoStationsSize2(self):
         llaves = om.keySet(self.tr_stations)
         return lt.size(llaves)
-        
+
     def getStationByCode(self, code:str) ->Station:
         pair = om.get(self.stations, code)
         return me.getValue(pair)
@@ -122,7 +122,8 @@ class Model:
 
     def addGraphVertex(self,vertex):
         #print("AGR VTX",vertex)
-        gr.insertVertex(self.graph,vertex)
+        if not gr.containsVertex(self.graph,vertex):
+            gr.insertVertex(self.graph,vertex)
 
         
     def addGraphEdge(self,code_origen, code_dest, peso):

@@ -107,8 +107,8 @@ def requerimiento_0():
 
 
     #print(lt.size(lista_stops))
-    ###print("-----------------------[vertces del grafo]-------------------")
-    ###printList(model.getGraphVertexList())
+    print("-----------------------[vertces del grafo]-------------------")
+    printList(model.getGraphVertexList())
     print("numero vertices grafo_",lt.size(model.getGraphVertexList()))
     ###print("-----------------------[arcos del grafo]-------------------")
     ###printList(model.getGraphEdgesList())
