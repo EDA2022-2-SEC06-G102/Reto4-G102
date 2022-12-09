@@ -176,3 +176,6 @@ def requerimiento_6(model, vertice_origen, vecindario_destino):
             if peso < peso_fake:
                 mejor_ruta = cola
     return cola, peso
+
+def requerimiento_7(model, vertice_origen, vecindario_destino):
+    pass

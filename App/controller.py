@@ -181,3 +181,6 @@ def requerimiento_4(modelClass, lonOrigen, latOrigen, lonDestino, latDestino):
 
 def requerimiento_6(modelClass, vertice_origen, vecindario_destino):
     return model.requerimiento_6(modelClass, vertice_origen, vecindario_destino)
+
+def requerimiento_7(modelClass, vertice_origen, vecindario_destino):
+    return model.requerimiento_7(modelClass, vertice_origen, vecindario_destino)

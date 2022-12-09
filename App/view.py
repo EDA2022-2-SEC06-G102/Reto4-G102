@@ -219,7 +219,8 @@ while True:
         else:
             print("No encontro ruta")
     elif int(inputs[0]) == 7:
-        pass
+        vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
+        controller.requerimiento_7(modelClass, vertice_origen, vecindario_destino)
     elif int(inputs[0]) == 8:
         pass
         
