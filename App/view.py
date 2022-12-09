@@ -106,10 +106,10 @@ def requerimiento_0():
 
 
     #print(lt.size(lista_stops))
-    print("-----------------------[vertces del grafo]-------------------")
-    vertices_lt = model.getGraphVertexList()
-    vertices_lt = qs.sort(vertices_lt,cmpstr)
-    printList(vertices_lt)
+    ###print("-----------------------[vertces del grafo]-------------------")
+    ###vertices_lt = model.getGraphVertexList()
+    ###vertices_lt = qs.sort(vertices_lt,cmpstr)
+    ###printList(vertices_lt)
     print("numero vertices grafo:            ",lt.size(model.getGraphVertexList()))
     ###print("-----------------------[arcos del grafo]-------------------")
     ###printList(model.getGraphEdgesList())
