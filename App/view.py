@@ -149,7 +149,10 @@ def print_primeros_y_ultimos(lista, funcion_de_impresion, num, True_or_False):
 
 #----------------------------------------------------------------------
 def printMenu():
-    print("Bienvenido")
+    print()
+    print("===========================")
+    print("       Bienvenido")
+    print("")
     print("0- Cargar información desde los Archivos")
     print("1- (REQ 1)Buscar un camino posible entre dos estaciones")
     print("2- (REQ 2)Buscar el camino con menos estaciones entre dos estaciones")
