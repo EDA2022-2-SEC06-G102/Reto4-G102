@@ -85,7 +85,6 @@ class Model:
     def getStationsSize(self):
         return om.size(self.stations)
 
-
     def getTransbordoStationsSize(self):
         llaves = om.keySet(self.stations)
         count =0 
@@ -103,7 +102,12 @@ class Model:
         pair = om.get(self.stations, code)
         return me.getValue(pair)
 
-
+    #Busca una estacion conociendo el vertice
+    def getStationByVertex(self, vertex:str) ->Station:        
+        if vertex.startswith("T-"):
+            return self.getStationByCode(vertex[2:])
+        code = vertex.split("-")[0]    
+        return self.getStationByCode(code)
 
     def addBusRoute(self, bus_route):
         pair =  om.get(self.bus_routes, bus_route.id)
