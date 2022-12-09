@@ -145,6 +145,18 @@ class Model:
     def getGraphEdgesList(self):
         return gr.edges(self.graph)
 
+    def dfs(self,initialStation):
+        
+        self.search = bfs.BreadhtFisrtSearch(self.graph, initialStation)
+        vertices = self.getGraphVertexList()
+        vertices_llegada = lt.newList('ARRAY_LIST')
+        for vertice in lt.iterator(vertices):
+            if vertice["vertexB"] == initialStation:
+                lt.addLast(vertice["vertexA"])
+        return vertices_llegada
+
+
+
     def graphHasPathTo(self,initialStation, finalStation, algorithm:str):
 
         if algorithm == "djk":
