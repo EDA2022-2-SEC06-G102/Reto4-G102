@@ -279,11 +279,12 @@ while True:
         print_primeros_y_ultimos( lista_valores , print_Requerimiento_3, 5, False)
     elif int(inputs[0]) == 4:
         print('Localización geográfica del usuario')
-        lonOrigen = float(input("Origen (longitud) del usuario': "))
-        latOrigen = float(input("Origen (latitud) del usuario': "))
-        lonDestino = float(input(" destino(longitud) del usuario': "))
-        latDestino = float(input(" destino(latitud) del usuario': "))
-        cola, peso = controller.requerimiento_4(modelClass, lonOrigen, latOrigen, lonDestino, latDestino)
+        lonOrigen  = float(input("Origen (longitud) del usuario': "))
+        latOrigen  = float(input("Origen (latitud)  del usuario': "))
+        lonDestino = float(input("Destino(longitud) del usuario': "))
+        latDestino = float(input("Destino(latitud)  del usuario': "))
+        cola, peso, origen, destino = controller.requerimiento_4(modelClass, lonOrigen, latOrigen, lonDestino, latDestino)
+        imprimirRuta(cola,origen,destino)
 
     elif int(inputs[0]) == 5:
         pass

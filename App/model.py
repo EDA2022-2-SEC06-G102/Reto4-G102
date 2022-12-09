@@ -154,8 +154,9 @@ def requerimiento_4(model, lonOrigen, latOrigen, lonDestino, latDestino):
     if model.graphHasPathTo(verticeOrigen, verticeDestino, "djk"):
         print("Si hay camino" )
         cola, peso = model.graphPathTo(verticeDestino,"djk")
-        return cola, peso
-    print("Si hay camino ",verticeOrigen,verticeDestino )
+        return cola, peso,verticeOrigen,verticeDestino
+    return None,0,None,None
+    #print("Si hay camino ",verticeOrigen,verticeDestino )
 
 def requerimiento_6(model, vertice_origen, vecindario_destino):
     peso_fake = 100000000

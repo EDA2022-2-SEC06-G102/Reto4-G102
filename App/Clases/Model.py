@@ -214,7 +214,7 @@ class Model:
         
         for element in idscc:            
             if element["value"] is not None:
-                print(element)
+                ##print(element)
                 llave = int(element["value"])
                 pair =  om.get(self.mapa_kosaraju, llave)
                 if pair is not None:
