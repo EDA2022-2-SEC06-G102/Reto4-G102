@@ -145,6 +145,7 @@ def loadData(control, file_size):
         vertice = line_archive["Code"]+"-"+line_archive["Bus_Stop"].replace("BUS-","")
         modelClass.addGraphVertex(vertice)
         if line_archive["Transbordo"] == "S":
+            modelClass.addGraphVertex("T-"+ line_archive["Code"])
             modelClass.addGraphEdge(vertice, "T-"+ line_archive["Code"],0)
             modelClass.addGraphEdge("T-"+ line_archive["Code"],vertice,0)
 
