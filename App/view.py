@@ -98,9 +98,11 @@ def requerimiento_0():
     answer = controller.Tiempo_de_carga_loadData(file_size, control, memflag=mem)
     printLoadDataAnswer(answer)
     model = getModel(control) 
-    print("Numero total de estaciones" , model.getStationsSize())
-    print("Numero total de rutas de bus" , model.getBusRoutesSize())
-    ###print("-----------------------[rutas]-------------------")
+    print("Numero total de estaciones:        " , model.getStationsSize())
+    print("Numero de estaciones de transbordo:" , model.getTransbordoStationsSize())
+    print("Numero de estaciones de transbordo:" , model.getTransbordoStationsSize2())
+    print("Numero total de rutas de bus:      " , model.getBusRoutesSize())
+    ####print("-----------------------[rutas]-------------------")
     ###printList(model.getBusRoutesList())
 
 

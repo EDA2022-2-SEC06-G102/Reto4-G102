@@ -56,21 +56,49 @@ def compareIntMap(int1, intentry):
                                               comparefunction=compareStopIds)"""
 class Model:
     def __init__(self ):
-        self.stations   = om.newMap(omaptype='RBT', comparefunction=compareStringMap)
-        self.bus_routes = om.newMap(omaptype='RBT', comparefunction=compareStringMap)
-        self.graph      = gr.newGraph(datastructure='ADJ_LIST',directed=True,size=14000,comparefunction=compareStringMap2)
+        self.stations    = om.newMap(omaptype='RBT', comparefunction=compareStringMap)
+        self.tr_stations = om.newMap(omaptype='RBT', comparefunction=compareStringMap)
+        self.bus_routes  = om.newMap(omaptype='RBT', comparefunction=compareStringMap)
+        self.graph       = gr.newGraph(datastructure='ADJ_LIST',directed=True,size=14000,comparefunction=compareStringMap2)
         self.search      = None
 
     def addStation(self, station):
+        if station.transbordo == "S":
+            om.put(self.tr_stations, station.code, station)
         pair =  om.get(self.stations, station.code)
         if pair is None:
             om.put(self.stations, station.code, station)
+        else:
+            encontrada = pair["value"]
+            if encontrada.latitud == station.latitud and encontrada.longitud == station.longitud:
+                print("Estacion mismo codigo latitud diferente ")
+                station.code = station.code+"A"
+                om.put(self.stations, station.code, station)
+        
+        return station                 
+
+    
+
     def getStationsList(self):
         return om.valueSet(self.stations)
 
     def getStationsSize(self):
         return om.size(self.stations)
 
+
+    def getTransbordoStationsSize(self):
+        llaves = om.keySet(self.stations)
+        count =0 
+        for k in lt.iterator(llaves):
+            station = om.get(self.stations,k)["value"]
+            if station.transbordo == "S":
+                count += 1
+        return count
+
+    def getTransbordoStationsSize2(self):
+        llaves = om.keySet(self.tr_stations)
+        return lt.size(llaves)
+        
     def getStationByCode(self, code:str) ->Station:
         pair = om.get(self.stations, code)
         return me.getValue(pair)
@@ -212,17 +240,17 @@ class Model:
             return vecindarios_list
 
     def verticesDelVecindario(self, vecindarios_list):
+        list_vertices = lt.newList('ARRAY_LIST')
         for station in lt.iterator(vecindarios_list):
             if station.transbordo == "S":
                 vertice = 'T-'+ station.code
                 if gr.containsVertex(self.graph, vertice):
-                    pass  
+                    lt.newList(list_vertices, vertice)
             else:
                 pass
                 #newIdBus = new_idbus()
                 #vertice = vecindarios.code + - +newIdBus 
-                
-
+        return list_vertices
     def buscarVertice(self,station):
         if station.transbordo == "S":
             vertice = 'T-'+ station.code

@@ -67,7 +67,6 @@ def add_carga_bus_stops(model, station, bus_route,line_archive):
     # Agrega las estaciones y las Rutas de Bus
     model.addStation(station)
     model.addBusRoute(bus_route)
-    
     if station.transbordo == "S":
         
         model.addGraphVertex("T-"+station.code)
