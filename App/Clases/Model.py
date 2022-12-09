@@ -71,7 +71,7 @@ class Model:
         else:
             encontrada = pair["value"]
             if encontrada.latitud == station.latitud and encontrada.longitud == station.longitud:
-                print("Estacion mismo codigo latitud diferente ")
+                #print("Estacion mismo codigo latitud diferente ")
                 station.code = station.code+"A"
                 om.put(self.stations, station.code, station)
         
@@ -190,10 +190,11 @@ class Model:
         if algorithm == "bfs":
                 cola = lt.newList('ARRAY_LIST')
                 pila = bfs.pathTo(self.search, finalStation)
+                #return pila,0
                 if pila is not None:
                     for value in lt.iterator(pila):
                         print(value)
-                        lt.addLast(cola,value)
+                        lt.addFirst(cola,value)
                     return cola,0
 
 

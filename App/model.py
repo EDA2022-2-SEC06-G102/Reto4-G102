@@ -129,6 +129,8 @@ def requerimiento_1(model, origen, destino):
     return cola, peso
 
 def requerimiento_2(model, origen, destino):
+    cola = None
+    peso = 0
     if model.graphHasPathTo(origen, destino, "bfs"):
         cola, peso = model.graphPathTo(destino,"bfs")
     return cola, peso

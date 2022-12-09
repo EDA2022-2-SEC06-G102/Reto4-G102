@@ -11,7 +11,7 @@ class Rendimiento:
         # inicializa el proceso para medir memoria
         if self.memflag is True:
             tracemalloc.start()
-            start_memory = self.getMemory()
+            self.start_memory = self.getMemory()
 
     def finalizar(self):            
     
@@ -52,3 +52,18 @@ class Rendimiento:
         devuelve el instante tiempo de procesamiento en milisegundos
         """
         return float(time.perf_counter()*1000)   
+
+    def deltaMemory(self,stop_memory, start_memory):
+        """
+        calcula la diferencia en memoria alocada del programa entre dos
+        instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
+        """
+        memory_diff = stop_memory.compare_to(start_memory, "filename")
+        delta_memory = 0.0
+
+        # suma de las diferencias en uso de memoria
+        for stat in memory_diff:
+            delta_memory = delta_memory + stat.size_diff
+        # de Byte -> kByte
+        delta_memory = delta_memory/1024.0
+        return delta_memory

@@ -89,8 +89,8 @@ def getModel(control) ->Model:
 
 
 
-def imprimirRuta(cola, origen, destino = None):
-    if cola is None:
+def imprimirRuta(path, origen, destino = None):
+    if path is None:
         print("No encontro ruta desde ",origen, end ="" )
         if destino is not None:
             print(" hasta ",destino,end="")
@@ -108,7 +108,7 @@ def imprimirRuta(cola, origen, destino = None):
     model = getModel(control)
     station = model.getStationByVertex(origen)
     print("Partiendo desde ",station)
-    for element in lt.iterator(cola):
+    for element in lt.iterator(path):
         station = model.getStationByVertex(element["vertexB"])
         if element["vertexB"].startswith("T-"):
             print(element["vertexA"].ljust(10)," -> ",element["vertexB"].ljust(10),"Transbordo bajarse en ",station)
@@ -121,6 +121,37 @@ def imprimirRuta(cola, origen, destino = None):
         peso = element["weight"]
         count += 1
     print("Distancia Total",peso, " Numero de paradas ",count,"Transbordos:",transbordos)        
+
+
+def imprimirRuta2(lista, origen, destino = None):
+    if lista is None:
+        print("No encontro ruta desde ",origen, end ="" )
+        if destino is not None:
+            print(" hasta ",destino,end="")
+        print("")
+        return
+    
+    print("Ruta desde ",origen, end ="" )
+    if destino is not None:
+        print(" hasta ",destino,end="")
+    print("")
+
+        
+    count = 0
+    transbordos = 0
+    model = getModel(control)
+    station = model.getStationByVertex(origen)
+    print("Partiendo desde ",station)
+    for element in lt.iterator(lista):
+        station = model.getStationByVertex(element)
+        if element.startswith("T-"):
+            print(element.ljust(10),"Transbordo  ",station)
+            transbordos += 1        
+        else:
+            print(element, station)        
+        count += 1
+    print( " Numero de paradas ",count,"Transbordos:",transbordos)        
+
 
 
 
@@ -228,18 +259,20 @@ while True:
         requerimiento_0()
     elif int(inputs[0]) == 1:
         
-        origen = input("Identificador de la estación origen: ")
+        origen = input("Identificador de la estación origen:   ")
         destino = input("Identificador de la estación destino: ")
         rendimiento = Rendimiento(True)
         cola, peso = controller.requerimiento_1(modelClass, origen, destino)
-        print("La distancia del recorrido es de", peso)
+        imprimirRuta(cola,origen,destino)
+        #print("La distancia del recorrido es de", peso)
         rendimiento.finalizar()
 
     elif int(inputs[0]) == 2:
         rendimiento = Rendimiento(True)
-        origen = input("Identificador de la estación origen: ")
+        origen  = input("Identificador de la estación origen:  ")
         destino = input("Identificador de la estación destino: ")
-        pila = controller.requerimiento_2(modelClass, origen, destino)
+        cola, peso = controller.requerimiento_2(modelClass, origen, destino)
+        imprimirRuta2(cola,origen,destino)
         rendimiento.finalizar()
     elif int(inputs[0]) == 3:
         lista_valores, num_conected = controller.requerimiento_3(modelClass)
