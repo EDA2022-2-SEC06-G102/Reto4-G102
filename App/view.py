@@ -30,9 +30,13 @@ from Clases.Model import Model
 from Clases.Rendimiento import Rendimiento
 import time
 from tabulate import tabulate
+import folium
+import webbrowser
+import tempfile
 
 
 control =  None
+locations = []
 #catalog = None
 
 
@@ -90,6 +94,7 @@ def getModel(control) ->Model:
 
 
 def imprimirRuta(path, origen, destino = None):
+    
     if path is None:
         print("No encontro ruta desde ",origen, end ="" )
         if destino is not None:
@@ -107,9 +112,13 @@ def imprimirRuta(path, origen, destino = None):
     transbordos = 0
     model = getModel(control)
     station = model.getStationByVertex(origen)
+
+    locations.append([station.latitud,station.longitud])
+
     print("Partiendo desde ",station)
     for element in lt.iterator(path):
         station = model.getStationByVertex(element["vertexB"])
+        locations.append([station.latitud,station.longitud])
         if element["vertexB"].startswith("T-"):
             print(element["vertexA"].ljust(10)," -> ",element["vertexB"].ljust(10),"Transbordo bajarse en ",station)
             transbordos += 1
@@ -299,6 +308,12 @@ while True:
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
         controller.requerimiento_7(modelClass, vertice_origen)
     elif int(inputs[0]) == 8:
+        m = folium.Map(locations[0], zoom_start=16)
+        my_PolyLine=folium.PolyLine(locations=locations,weight=5)
+        m.add_child(my_PolyLine)
+        ruta = tempfile.gettempdir()+("/graph.html")
+        m.save(ruta)
+        webbrowser.open("file://"+ruta)
         pass
         
     else:
