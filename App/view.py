@@ -208,8 +208,13 @@ while True:
 
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
         vecindario_destino = str(input("El identificador del vecindario (Neighborhood) destino: "))
-        controller.requerimiento_6(modelClass, vertice_origen, vecindario_destino)
-
+        cola, peso = controller.requerimiento_6(modelClass, vertice_origen, vecindario_destino)
+        if cola is not None:
+            print("Encontro la siguiente ruta")
+            for element in lt.iterator(cola):
+                print(element)
+        else:
+            print("No encontro ruta")
     elif int(inputs[0]) == 7:
         pass
     elif int(inputs[0]) == 8:

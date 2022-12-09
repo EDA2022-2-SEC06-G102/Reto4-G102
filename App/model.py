@@ -156,4 +156,23 @@ def requerimiento_4(model, lonOrigen, latOrigen, lonDestino, latDestino):
     print("Si hay camino ",verticeOrigen,verticeDestino )
 
 def requerimiento_6(model, vertice_origen, vecindario_destino):
-    pass    
+    peso_fake = 100000000
+    mejor_ruta = None
+    stations_list = model.estacionesDelVecindario(vecindario_destino)
+    print("----- Posibles estaciones -------")
+    for station in lt.iterator(stations_list):
+        print("    " ,station)
+
+    vertices_list =model.verticesDelVecindario(stations_list)
+    print("----- Posibles vertices -------")
+    for vertice in lt.iterator(vertices_list):
+        print("    " ,vertice)
+
+    cola = None
+    peso = None
+    for verticeDestino in lt.iterator(vertices_list):
+        if model.graphHasPathTo(vertice_origen, verticeDestino, "djk"):
+            cola, peso = model.graphPathTo(verticeDestino,"djk")
+            if peso < peso_fake:
+                mejor_ruta = cola
+    return cola, peso

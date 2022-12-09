@@ -240,18 +240,21 @@ class Model:
  
             return vecindarios_list
 
-    def verticesDelVecindario(self, vecindarios_list):
+    def verticesDelVecindario(self, stations_list):
         list_vertices = lt.newList('ARRAY_LIST')
-        for station in lt.iterator(vecindarios_list):
+        vetices = gr.vertices(self.graph)
+        for station in lt.iterator(stations_list):
             if station.transbordo == "S":
                 vertice = 'T-'+ station.code
                 if gr.containsVertex(self.graph, vertice):
-                    lt.newList(list_vertices, vertice)
-            else:
-                pass
-                #newIdBus = new_idbus()
-                #vertice = vecindarios.code + - +newIdBus 
+                    lt.addLast(list_vertices, vertice)
+
+            for vertice in lt.iterator(vetices):
+                if vertice.startswith(station.code+"-"):                
+                    lt.addLast(list_vertices, vertice)                    
         return list_vertices
+
+
     def buscarVertice(self,station):
         if station.transbordo == "S":
             vertice = 'T-'+ station.code
