@@ -115,7 +115,7 @@ def imprimirRuta(cola, origen, destino = None):
             transbordos += 1
         elif element["vertexA"].startswith("T-"):    
             busid = element["vertexB"].split("-")[1]
-            print(element["vertexA"].ljust(10)," -> ",element["vertexB"].ljust(10),"Transbordo tomar ","BUS-"+busid," en ",station)
+            print(element["vertexA"].ljust(10)," -> ",element["vertexB"].ljust(10),"Transbordo tomar      ","BUS-"+busid," en ",station)
         else:
             print(element["vertexA"].ljust(10)," -> ",element["vertexB"].ljust(10), station)
         peso = element["weight"]
