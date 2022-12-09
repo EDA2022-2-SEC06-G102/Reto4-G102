@@ -24,6 +24,7 @@
 from Clases.Model import Model
 from Clases.BusRoute import BusRoute
 from Clases.Station import Station
+from Clases.Rendimiento import Rendimiento
 from DISClib.ADT import list as lt
 from datetime import datetime
 import config as cf

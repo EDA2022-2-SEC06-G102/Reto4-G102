@@ -27,8 +27,10 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import quicksort as qs
 assert cf
 from Clases.Model import Model
+from Clases.Rendimiento import Rendimiento
 import time
 from tabulate import tabulate
+
 
 control =  None
 #catalog = None
@@ -185,15 +187,20 @@ while True:
         modelClass = control["model"]
         requerimiento_0()
     elif int(inputs[0]) == 1:
+        
         origen = input("Identificador de la estación origen: ")
         destino = input("Identificador de la estación destino: ")
+        rendimiento = Rendimiento(True)
         cola, peso = controller.requerimiento_1(modelClass, origen, destino)
         print("La distancia del recorrido es de", peso)
+        rendimiento.finalizar()
 
     elif int(inputs[0]) == 2:
+        rendimiento = Rendimiento(True)
         origen = input("Identificador de la estación origen: ")
         destino = input("Identificador de la estación destino: ")
         pila = controller.requerimiento_2(modelClass, origen, destino)
+        rendimiento.finalizar()
     elif int(inputs[0]) == 3:
         lista_valores, num_conected = controller.requerimiento_3(modelClass)
         print_primeros_y_ultimos( lista_valores , print_Requerimiento_3, 5, False)
