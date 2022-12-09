@@ -177,5 +177,6 @@ def requerimiento_6(model, vertice_origen, vecindario_destino):
                 mejor_ruta = cola
     return cola, peso
 
-def requerimiento_7(model, vertice_origen, vecindario_destino):
-    pass
+def requerimiento_7(model, vertice_origen):
+    cola = model.bfs(vertice_origen)
+    print(cola)

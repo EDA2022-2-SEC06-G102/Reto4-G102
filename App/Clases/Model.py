@@ -149,17 +149,20 @@ class Model:
     def getGraphEdgesList(self):
         return gr.edges(self.graph)
 
-    def dfs(self,initialStation):
+    def bfs(self,initialStation):
         
         self.search = bfs.BreadhtFisrtSearch(self.graph, initialStation)
-        vertices = self.getGraphVertexList()
+        arcos = self.getGraphEdgesList()
         vertices_llegada = lt.newList('ARRAY_LIST')
-        for vertice in lt.iterator(vertices):
-            if vertice["vertexB"] == initialStation:
-                lt.addLast(vertice["vertexA"])
-        return vertices_llegada
+        for arco in lt.iterator(arcos):
+            if arco["vertexB"] == initialStation:
+                lt.addLast(vertices_llegada,arco["vertexA"])
 
+        for vertice in lt.iterator(vertices_llegada):
+            if bfs.hasPathTo(self.search, vertice):
+                cola = self.graphPathTo(vertice, "bfs")
 
+        return cola
 
     def graphHasPathTo(self,initialStation, finalStation, algorithm:str):
 
