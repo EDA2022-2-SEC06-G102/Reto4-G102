@@ -5,7 +5,7 @@ import tracemalloc
 class Rendimiento:
     def __init__(self,memflag) -> None:
         # toma el tiempo al inicio del proceso
-        self.start_time = getTime()
+        self.start_time = self.getTime()
         self.memflag = memflag
    
         # inicializa el proceso para medir memoria
@@ -45,4 +45,10 @@ class Rendimiento:
         devuelve la diferencia entre tiempos de procesamiento muestreados
         """
         elapsed = float(end - start)
-        return elapsed        
+        return elapsed
+
+    def getTime(self):
+        """
+        devuelve el instante tiempo de procesamiento en milisegundos
+        """
+        return float(time.perf_counter()*1000)   

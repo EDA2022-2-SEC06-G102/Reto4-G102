@@ -187,9 +187,10 @@ while True:
         modelClass = control["model"]
         requerimiento_0()
     elif int(inputs[0]) == 1:
-        rendimiento = Rendimiento(True)
+        
         origen = input("Identificador de la estación origen: ")
         destino = input("Identificador de la estación destino: ")
+        rendimiento = Rendimiento(True)
         cola, peso = controller.requerimiento_1(modelClass, origen, destino)
         print("La distancia del recorrido es de", peso)
         rendimiento.finalizar()
