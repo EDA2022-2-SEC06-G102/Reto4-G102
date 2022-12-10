@@ -4,6 +4,7 @@ from DISClib.Algorithms.Graphs import dijsktra as djk
 from DISClib.Algorithms.Graphs import bfs as bfs
 from DISClib.Algorithms.Graphs import scc as scc
 from DISClib.Algorithms.Graphs import cycles as cycles
+
 from DISClib.ADT import list as lt
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import graph as gr
@@ -11,6 +12,7 @@ from DISClib.ADT import graph as gr
 from DISClib.DataStructures import mapentry as me
 from DISClib.ADT import stack
 from DISClib.Algorithms.Sorting import mergesort as merge
+from DISClib.Algorithms.Sorting import quicksort as quicksort
 
 import traceback
 
@@ -89,10 +91,14 @@ class Model:
         
         return station                 
 
-    
+    #def getAdyacentesPorCodigoEstacion(code):
+    #    arcos = gr.edges
+
 
     def getStationsList(self):
-        return om.valueSet(self.stations)
+        lista =  om.valueSet(self.stations)
+        lista = quicksort.sort(lista,compareStationList)
+        return lista
 
     def getStationsSize(self):
         return om.size(self.stations)
@@ -110,8 +116,7 @@ class Model:
         llaves = om.keySet(self.tr_stations)
         return lt.size(llaves)
 
-    def getExclusiveStationsSize(self):
-        
+    def getExclusiveStationsSize(self):        
         return lt.size(self.ex_stations)
 
     def getStationByCode(self, code:str) ->Station:
@@ -310,6 +315,20 @@ class Model:
                     lt.addLast(list_vertices, vertice)                    
         return list_vertices
 
+    def rectanguloBarcelona(self):
+        stations = self.getStationsList()
+        station = lt.firstElement(stations)
+        lat_min = station.latitud
+        lat_max = station.latitud
+        lon_min = station.longitud
+        lon_max = station.longitud
+
+        for station in lt.iterator(stations):
+            lat_min = min(station.latitud ,lat_min)
+            lat_max = max(station.latitud ,lat_max)
+            lon_min = min(station.longitud,lon_min)
+            lon_max = min(station.longitud,lon_max)
+        return lat_min,lon_min, lat_max, lon_max
 
     def buscarVertice(self,station):
         if station.transbordo == "S":
@@ -342,5 +361,10 @@ def new_idbus(idbus):
 
 def compareList(a1, a2):    
     return a2["cont"] < a1["cont"] 
+
+
+def compareStationList(a1, a2):
+    return a2.code < a1.code
+
 def compareList2(a1, a2):    
     return a2 < a1

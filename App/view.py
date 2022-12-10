@@ -28,9 +28,10 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import quicksort as qs
 assert cf
 from Clases.Model import Model
+from Clases.Station import Station
 from Clases.Rendimiento import Rendimiento
 import time
-from tabulate import tabulate
+from   tabulate import tabulate
 import folium
 import webbrowser
 import tempfile
@@ -206,6 +207,21 @@ def requerimiento_0():
     ###    print(e["vertexA"]+","+str(round(e["weight"],2)) +", "+e["vertexB"])
     print("numero arcos grafo:               ",lt.size(model.getGraphEdgesList()))
 
+    lat_min,lon_min, lat_max, lon_max = model.rectanguloBarcelona()
+    print("latitud min",lat_min,"longitud min",lon_min, "latitud max",lat_max,"longitud max", lon_max)
+    lista = model.getStationsList()
+    print_primeros_y_ultimos(lista,print_station_req0, 5, True)
+
+def print_station_req0(lista):
+
+    headers = [ "Código", "Latitud","Longitud"]
+    impresion = []        
+    
+    for station in lt.iterator(lista):
+        impresion.append([station.code,station.latitud, station.longitud])        
+        
+    print(tabulate(impresion, headers, tablefmt="grid"))
+
 def print_primeros_y_ultimos(lista, funcion_de_impresion, num, True_or_False):
     
     #Entra si es True
@@ -266,12 +282,16 @@ def print_Requerimiento_3(lista):
 
 while True:
     printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 0:
+    opcion = None
+    try:
+        opcion = int(input('Seleccione una opción para continuar\n'))
+    except:
+        opcion = -1
+    if int(opcion) == 0:
         control = newController()
         modelClass = control["model"]
         requerimiento_0()
-    elif int(inputs[0]) == 1:
+    elif opcion == 1:
         
         origen = input("Identificador de la estación origen:   ")
         destino = input("Identificador de la estación destino: ")
@@ -282,7 +302,7 @@ while True:
         #print("La distancia del recorrido es de", peso)
         
 
-    elif int(inputs[0]) == 2:
+    elif opcion == 2:
         
         origen  = input("Identificador de la estación origen:  ")
         destino = input("Identificador de la estación destino: ")
@@ -293,7 +313,7 @@ while True:
 
         imprimirRuta2(cola,origen,destino)
         
-    elif int(inputs[0]) == 3:
+    elif opcion == 3:
 
         rendimiento = Rendimiento(True)
         lista_valores, num_conected = controller.requerimiento_3(modelClass)
@@ -301,7 +321,7 @@ while True:
 
         print_primeros_y_ultimos( lista_valores , print_Requerimiento_3, 5, False)
 
-    elif int(inputs[0]) == 4:
+    elif opcion == 4:
         print('Localización geográfica del usuario')
         lonOrigen  = float(input("Origen (longitud) del usuario': "))
         latOrigen  = float(input("Origen (latitud)  del usuario': "))
@@ -314,9 +334,9 @@ while True:
 
         imprimirRuta(cola,origen,destino)
 
-    elif int(inputs[0]) == 5:
+    elif opcion == 5:
         pass
-    elif int(inputs[0]) == 6:
+    elif opcion == 6:
 
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
         vecindario_destino = str(input("El identificador del vecindario (Neighborhood) destino: "))
@@ -327,12 +347,12 @@ while True:
 
         imprimirRuta(cola, vertice_origen, vecindario_destino)
 
-    elif int(inputs[0]) == 7:
+    elif opcion == 7:
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
         modelClass.cycles(vertice_origen)
         #cola  = controller.requerimiento_7(modelClass, vertice_origen)
         #imprimirRuta2(cola,vertice_origen)
-    elif int(inputs[0]) == 8:
+    elif opcion == 8:
         m = folium.Map(locations[0], zoom_start=16)
         my_PolyLine=folium.PolyLine(locations=locations,weight=5)
         m.add_child(my_PolyLine)
@@ -341,6 +361,7 @@ while True:
         webbrowser.open("file://"+ruta)
         pass
         
-    else:
-        sys.exit(0)
+    elif opcion == -1:
+        print("Opción inválida")
+        #sys.exit(0)
 sys.exit(0)
