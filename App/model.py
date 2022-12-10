@@ -183,7 +183,9 @@ def requerimiento_6(model, vertice_origen, vecindario_destino):
     for verticeDestino in lt.iterator(vertices_list):
         if model.djk_hasPathTo(verticeDestino):
             cola, peso,largo = model.djk_pathTo(verticeDestino)
-            if peso < mejor_peso  and largo < mejor_largo:
+            #print("    ",peso,largo,verticeDestino)
+            if peso <= mejor_peso  and largo < mejor_largo:
+                #print("     win")
                 mejor_ruta = cola
                 mejor_peso = peso
                 mejor_largo = largo
