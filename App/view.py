@@ -358,9 +358,9 @@ while True:
 
     elif opcion == 7:
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
-        modelClass.cycles(vertice_origen)
-        #cola  = controller.requerimiento_7(modelClass, vertice_origen)
-        #imprimirRuta2(cola,vertice_origen)
+        ###modelClass.cycles(vertice_origen)
+        cola  = controller.requerimiento_7(modelClass, vertice_origen)
+        imprimirRuta2(cola,vertice_origen)
     elif opcion == 8:
         m = folium.Map(locations[0], zoom_start=16)
         my_PolyLine=folium.PolyLine(locations=locations,weight=5)
