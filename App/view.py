@@ -129,7 +129,7 @@ def imprimirRuta(path, origen, destino = None):
             print(element["vertexA"].ljust(10)," -> ",element["vertexB"].ljust(10),"Transbordo tomar      ","BUS-"+busid," en ",station)
         else:
             print(element["vertexA"].ljust(10)," -> ",element["vertexB"].ljust(10), station)
-        peso = element["weight"]
+        peso  += element["weight"]
         count += 1
     print("Distancia Total",peso, " Numero de paradas ",count,"Transbordos:",transbordos)        
 
