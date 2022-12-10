@@ -238,6 +238,28 @@ class Model:
         print("P6")
         return cola
 
+    def req7(self, initialStation):
+        self.djk_search(initialStation)    
+        print("P2")
+        arcos = self.getGraphEdgesList()
+        print("P3")
+        vertices_llegada = lt.newList('ARRAY_LIST')
+        print("P4")
+        for arco in lt.iterator(arcos):
+            if arco["vertexB"] == initialStation:
+                lt.addLast(vertices_llegada,arco["vertexA"])
+
+        print("P5")
+        max_largo = 0 
+        cola = None
+        for vertice in lt.iterator(vertices_llegada):
+            if self.djk_hasPathTo(vertice):
+                c,peso, largo = self.djk_pathTo(vertice)    
+                if max_largo < largo:
+                    cola = c   
+                    max_largo = largo
+        return cola         
+
 
     def djk_search(self,initialStation):
         self.search = djk.Dijkstra(self.graph, initialStation)
