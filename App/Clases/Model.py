@@ -196,6 +196,9 @@ class Model:
         return gr.edges(self.graph)
     
 
+    def indegree(self,v):
+        return gr.indegree(self.graph,v)
+
     def cycles(self,initialStation):
         search = cycles.DirectedCycle(self.graph)
         cycles.dfs(self.graph,search,initialStation)

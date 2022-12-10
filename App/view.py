@@ -199,7 +199,8 @@ def requerimiento_0():
     ###vertices_lt = model.getGraphVertexList()
     ###vertices_lt = qs.sort(vertices_lt,cmpstr)
     ###printList(vertices_lt)
-    print("numero vertices grafo:            ",lt.size(model.getGraphVertexList()))
+    vertices = model.getGraphVertexList()
+    print("numero vertices grafo:            ",lt.size(vertices))
     ###print("-----------------------[arcos del grafo]-------------------")
     ###printList(model.getGraphEdgesList())
 
@@ -210,17 +211,19 @@ def requerimiento_0():
 
     lat_min,lon_min, lat_max, lon_max = model.rectanguloBarcelona()
     print("latitud min",lat_min,"longitud min",lon_min, "latitud max",lat_max,"longitud max", lon_max)
-    lista = model.getStationsList()
-    pr5 = print_primeros_y_ultimos(lista,None, 5, True)
-    print_station_req0(pr5)
+    #lista = model.getStationsList()
+    pr5 = print_primeros_y_ultimos(vertices,None, 5, True)
+    print_vertices_req0(pr5)
 
-def print_station_req0(lista):
-
-    headers = [ "Código", "Latitud","Longitud"]
+def print_vertices_req0(lista):
+    model = getModel(control)   
+    headers = [ "Node", "Codigo", "BusID","Latitud","Longitud"]
     impresion = []        
     
-    for station in lt.iterator(lista):
-        impresion.append([station.code,station.latitud, station.longitud])        
+    for vertice in lt.iterator(lista):
+        station = model.getStationByVertex(vertice)
+        impresion.append([vertice, station.code,"BUS-"+vertice.split("-")[1],station.latitud, station.longitud, model.indegree(vertice)])        
+
         
     print(tabulate(impresion, headers, tablefmt="grid"))
 
