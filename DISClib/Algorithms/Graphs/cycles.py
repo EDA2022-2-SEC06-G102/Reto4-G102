@@ -26,7 +26,7 @@
 
 
 import config
-from DISClib.DataStructures import edge as e
+PIP from DISClib.DataStructures import edge as e
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import map as map
@@ -38,7 +38,7 @@ assert config
 def DirectedCycle(graph):
     """
     Detecta ciclos en un grafo dirigido
-    Args:
+    Args:<<
         graph: El grafo de busqueda
 
     Returns:
