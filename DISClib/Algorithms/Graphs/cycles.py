@@ -26,7 +26,7 @@
 
 
 import config
-PIP from DISClib.DataStructures import edge as e
+from DISClib.DataStructures import edge as e
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import map as map
