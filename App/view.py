@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from statistics import mode
 import config as cf
 import sys
 import controller
@@ -39,7 +40,7 @@ control =  None
 locations = []
 #catalog = None
 
-
+sys.setrecursionlimit(10000)
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -151,7 +152,10 @@ def imprimirRuta2(lista, origen, destino = None):
     model = getModel(control)
     station = model.getStationByVertex(origen)
     print("Partiendo desde ",station)
+    #print(lista)
+    #print("----")
     for element in lt.iterator(lista):
+        #print(element)
         station = model.getStationByVertex(element)
         if element.startswith("T-"):
             print(element.ljust(10),"Transbordo  ",station)
@@ -306,7 +310,9 @@ while True:
 
     elif int(inputs[0]) == 7:
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
-        controller.requerimiento_7(modelClass, vertice_origen)
+        modelClass.cycles(vertice_origen)
+        #cola  = controller.requerimiento_7(modelClass, vertice_origen)
+        #imprimirRuta2(cola,vertice_origen)
     elif int(inputs[0]) == 8:
         m = folium.Map(locations[0], zoom_start=16)
         my_PolyLine=folium.PolyLine(locations=locations,weight=5)

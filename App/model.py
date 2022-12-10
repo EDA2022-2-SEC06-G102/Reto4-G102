@@ -182,4 +182,5 @@ def requerimiento_6(model, vertice_origen, vecindario_destino):
 
 def requerimiento_7(model, vertice_origen):
     cola = model.bfs(vertice_origen)
-    print(cola)
+    #print(cola)
+    return cola

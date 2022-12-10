@@ -3,9 +3,11 @@ from Clases.BusRoute import BusRoute
 from DISClib.Algorithms.Graphs import dijsktra as djk
 from DISClib.Algorithms.Graphs import bfs as bfs
 from DISClib.Algorithms.Graphs import scc as scc
+from DISClib.Algorithms.Graphs import cycles as cycles
 from DISClib.ADT import list as lt
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import graph as gr
+
 from DISClib.DataStructures import mapentry as me
 from DISClib.ADT import stack
 from DISClib.Algorithms.Sorting import mergesort as merge
@@ -148,20 +150,40 @@ class Model:
 
     def getGraphEdgesList(self):
         return gr.edges(self.graph)
+    
+
+    def cycles(self,initialStation):
+        search = cycles.DirectedCycle(self.graph)
+        cycles.dfs(self.graph,search,initialStation)
+        if cycles.hasCycle(search):
+            ciclo = cycles.cycle(search)
+            for e in lt.iterator(ciclo):            
+                print(e)
 
     def bfs(self,initialStation):
-        
+        cola = None
+        print("P1")
         self.search = bfs.BreadhtFisrtSearch(self.graph, initialStation)
+        print("P2")
         arcos = self.getGraphEdgesList()
+        print("P3")
         vertices_llegada = lt.newList('ARRAY_LIST')
+        print("P4")
         for arco in lt.iterator(arcos):
             if arco["vertexB"] == initialStation:
                 lt.addLast(vertices_llegada,arco["vertexA"])
-
+        print("P5")
+        largo = 0 
         for vertice in lt.iterator(vertices_llegada):
             if bfs.hasPathTo(self.search, vertice):
-                cola = self.graphPathTo(vertice, "bfs")
-
+                colatemp,peso = self.graphPathTo(vertice, "bfs")
+                l = lt.size(colatemp)
+                if l > largo:
+                    for item in lt.iterator(colatemp):
+                        if item.startswith("T-") :
+                            cola = colatemp
+                            largo = l
+        print("P6")
         return cola
 
     def graphHasPathTo(self,initialStation, finalStation, algorithm:str):
@@ -193,7 +215,7 @@ class Model:
                 #return pila,0
                 if pila is not None:
                     for value in lt.iterator(pila):
-                        print(value)
+                        #print(value)
                         lt.addFirst(cola,value)
                     return cola,0
 
