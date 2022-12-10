@@ -38,7 +38,7 @@ assert config
 def DirectedCycle(graph):
     """
     Detecta ciclos en un grafo dirigido
-    Args:
+    Args:<<
         graph: El grafo de busqueda
 
     Returns:

@@ -277,27 +277,41 @@ while True:
         destino = input("Identificador de la estación destino: ")
         rendimiento = Rendimiento(True)
         cola, peso = controller.requerimiento_1(modelClass, origen, destino)
+        rendimiento.finalizar()
         imprimirRuta(cola,origen,destino)
         #print("La distancia del recorrido es de", peso)
-        rendimiento.finalizar()
+        
 
     elif int(inputs[0]) == 2:
-        rendimiento = Rendimiento(True)
+        
         origen  = input("Identificador de la estación origen:  ")
         destino = input("Identificador de la estación destino: ")
+
+        rendimiento = Rendimiento(True)
         cola, peso = controller.requerimiento_2(modelClass, origen, destino)
-        imprimirRuta2(cola,origen,destino)
         rendimiento.finalizar()
+
+        imprimirRuta2(cola,origen,destino)
+        
     elif int(inputs[0]) == 3:
+
+        rendimiento = Rendimiento(True)
         lista_valores, num_conected = controller.requerimiento_3(modelClass)
+        rendimiento.finalizar()
+
         print_primeros_y_ultimos( lista_valores , print_Requerimiento_3, 5, False)
+
     elif int(inputs[0]) == 4:
         print('Localización geográfica del usuario')
         lonOrigen  = float(input("Origen (longitud) del usuario': "))
         latOrigen  = float(input("Origen (latitud)  del usuario': "))
         lonDestino = float(input("Destino(longitud) del usuario': "))
         latDestino = float(input("Destino(latitud)  del usuario': "))
+
+        rendimiento = Rendimiento(True)
         cola, peso, origen, destino = controller.requerimiento_4(modelClass, lonOrigen, latOrigen, lonDestino, latDestino)
+        rendimiento.finalizar()
+
         imprimirRuta(cola,origen,destino)
 
     elif int(inputs[0]) == 5:
@@ -306,7 +320,11 @@ while True:
 
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
         vecindario_destino = str(input("El identificador del vecindario (Neighborhood) destino: "))
+
+        rendimiento = Rendimiento(True)
         cola, peso = controller.requerimiento_6(modelClass, vertice_origen, vecindario_destino)
+        rendimiento.finalizar()
+
         imprimirRuta(cola, vertice_origen, vecindario_destino)
 
     elif int(inputs[0]) == 7:
