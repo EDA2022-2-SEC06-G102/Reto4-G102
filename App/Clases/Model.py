@@ -244,12 +244,14 @@ class Model:
         peso = 0
         pila = djk.pathTo(self.search, finalStation)
         cola = lt.newList('ARRAY_LIST')
+        largo = 0
         if pila is not None:
             while (not stack.isEmpty(pila)):
                 stop = stack.pop(pila)
                 peso += stop["weight"]
                 lt.addLast(cola, stop)
-        return cola, peso
+                largo += 1
+        return cola, peso, largo
 
     def graphHasPathTo(self,initialStation, finalStation, algorithm:str):
 

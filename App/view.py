@@ -347,7 +347,7 @@ while True:
         vecindario_destino = str(input("El identificador del vecindario (Neighborhood) destino: "))
 
         rendimiento = Rendimiento(True)
-        cola, peso = controller.requerimiento_6(modelClass, vertice_origen, vecindario_destino)
+        cola, peso, largo= controller.requerimiento_6(modelClass, vertice_origen, vecindario_destino)
         rendimiento.finalizar()
 
         imprimirRuta(cola, vertice_origen, vecindario_destino)
