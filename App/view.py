@@ -345,12 +345,14 @@ while True:
 
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))
         vecindario_destino = str(input("El identificador del vecindario (Neighborhood) destino: "))
+        if not getModel(control).containsVertex(vertice_origen) :
+            print("Estacion de origen no existe")
+        else:
+            rendimiento = Rendimiento(True)
+            cola, peso, largo= controller.requerimiento_6(modelClass, vertice_origen, vecindario_destino)
+            rendimiento.finalizar()
 
-        rendimiento = Rendimiento(True)
-        cola, peso, largo= controller.requerimiento_6(modelClass, vertice_origen, vecindario_destino)
-        rendimiento.finalizar()
-
-        imprimirRuta(cola, vertice_origen, vecindario_destino)
+            imprimirRuta(cola, vertice_origen, vecindario_destino)
 
     elif opcion == 7:
         vertice_origen = str(input("Identificador de la estación origen (en formato Code-IdBus): "))

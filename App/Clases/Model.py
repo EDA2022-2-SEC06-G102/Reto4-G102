@@ -146,7 +146,12 @@ class Model:
 
     def getStationByCode(self, code:str) ->Station:
         pair = om.get(self.stations, code)
+        if pair is None:
+            return None
         return me.getValue(pair)
+    
+    def containsVertex(self,vertex:str)->str:
+        return gr.containsVertex(self.graph,vertex)
 
     #Busca una estacion conociendo el vertice
     def getStationByVertex(self, vertex:str) ->Station:        
