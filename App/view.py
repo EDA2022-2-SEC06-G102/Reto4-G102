@@ -186,6 +186,7 @@ def requerimiento_0():
     print("Numero total de estaciones:        " , model.getStationsSize())
     print("Numero de estaciones de transbordo:" , model.getTransbordoStationsSize())
     print("Numero de estaciones de transbordo:" , model.getTransbordoStationsSize2())
+    print("Numero de estaciones de exclusivas:" , model.getExclusiveStationsSize())
     print("Numero total de rutas de bus:      " , model.getBusRoutesSize())
     ####print("-----------------------[rutas]-------------------")
     ###printList(model.getBusRoutesList())

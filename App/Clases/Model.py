@@ -58,15 +58,25 @@ def compareIntMap(int1, intentry):
                                               comparefunction=compareStopIds)"""
 class Model:
     def __init__(self ):
+        #Todas las estaciones
         self.stations    = om.newMap(omaptype='RBT', comparefunction=compareStringMap)
+        #Estaciones transbordo
         self.tr_stations = om.newMap(omaptype='RBT', comparefunction=compareStringMap)
+        #Estaciones exclusivas
+        self.ex_stations = lt.newList() 
+        #Rutas de bus
         self.bus_routes  = om.newMap(omaptype='RBT', comparefunction=compareStringMap)
+        #Grafo
         self.graph       = gr.newGraph(datastructure='ADJ_LIST',directed=True,size=14000,comparefunction=compareStringMap2)
+        #Resultado de una búsqueda
         self.search      = None
 
     def addStation(self, station):
         if station.transbordo == "S":
             om.put(self.tr_stations, station.code, station)
+        else:
+            lt.addLast(self.ex_stations,  station)
+
         pair =  om.get(self.stations, station.code)
         if pair is None:
             om.put(self.stations, station.code, station)
@@ -99,6 +109,10 @@ class Model:
     def getTransbordoStationsSize2(self):
         llaves = om.keySet(self.tr_stations)
         return lt.size(llaves)
+
+    def getExclusiveStationsSize(self):
+        
+        return lt.size(self.ex_stations)
 
     def getStationByCode(self, code:str) ->Station:
         pair = om.get(self.stations, code)
