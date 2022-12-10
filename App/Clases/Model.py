@@ -233,6 +233,24 @@ class Model:
         print("P6")
         return cola
 
+
+    def djk_search(self,initialStation):
+        self.search = djk.Dijkstra(self.graph, initialStation)
+
+    def djk_hasPathTo(self,finalStation):        
+        return djk.hasPathTo(self.search, finalStation)
+
+    def djk_pathTo(self,finalStation):
+        peso = 0
+        pila = djk.pathTo(self.search, finalStation)
+        cola = lt.newList('ARRAY_LIST')
+        if pila is not None:
+            while (not stack.isEmpty(pila)):
+                stop = stack.pop(pila)
+                peso += stop["weight"]
+                lt.addLast(cola, stop)
+        return cola, peso
+
     def graphHasPathTo(self,initialStation, finalStation, algorithm:str):
 
         if algorithm == "djk":

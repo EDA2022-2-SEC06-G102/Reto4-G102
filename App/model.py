@@ -164,7 +164,7 @@ def requerimiento_4(model, lonOrigen, latOrigen, lonDestino, latDestino):
     #print("Si hay camino ",verticeOrigen,verticeDestino )
 
 def requerimiento_6(model, vertice_origen, vecindario_destino):
-    peso_fake = 100000000
+    mejor_peso = 100000000
     mejor_ruta = None
     stations_list = model.estacionesDelVecindario(vecindario_destino)
     print("----- Posibles estaciones -------")
@@ -178,12 +178,16 @@ def requerimiento_6(model, vertice_origen, vecindario_destino):
 
     cola = None
     peso = None
+    
+    model.djk_search(vertice_origen)
     for verticeDestino in lt.iterator(vertices_list):
-        if model.graphHasPathTo(vertice_origen, verticeDestino, "djk"):
-            cola, peso = model.graphPathTo(verticeDestino,"djk")
-            if peso < peso_fake:
+        if model.djk_hasPathTo(verticeDestino):
+            cola, peso = model.djk_pathTo(verticeDestino)
+            if peso < mejor_peso:
                 mejor_ruta = cola
-    return cola, peso
+                mejor_peso = peso
+
+    return cola, mejor_peso
 
 def requerimiento_7(model, vertice_origen):
     cola = model.bfs(vertice_origen)
