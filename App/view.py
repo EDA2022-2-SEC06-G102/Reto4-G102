@@ -152,12 +152,14 @@ def imprimirRuta2(lista, origen, destino = None):
     transbordos = 0
     model = getModel(control)
     station = model.getStationByVertex(origen)
+    locations.append([station.latitud,station.longitud])
     print("Partiendo desde ",station)
     #print(lista)
     #print("----")
     for element in lt.iterator(lista):
         #print(element)
         station = model.getStationByVertex(element)
+        locations.append([station.latitud,station.longitud])
         if element.startswith("T-"):
             print(element.ljust(10),"Transbordo  ",station)
             transbordos += 1        
