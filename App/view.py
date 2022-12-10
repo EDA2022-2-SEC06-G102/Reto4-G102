@@ -20,18 +20,18 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-from statistics import mode
+from statistics          import mode
 import config as cf
 import sys
 import controller
-from DISClib.ADT import list as lt
+from DISClib.ADT        import list as lt
 from DISClib.Algorithms.Sorting import quicksort as qs
 assert cf
-from Clases.Model import Model
-from Clases.Station import Station
+from Clases.Model       import Model
+from Clases.Station     import Station
 from Clases.Rendimiento import Rendimiento
 import time
-from   tabulate import tabulate
+from   tabulate         import tabulate
 import folium
 import webbrowser
 import tempfile
@@ -167,11 +167,9 @@ def imprimirRuta2(lista, origen, destino = None):
     print( " Numero de paradas ",count,"Transbordos:",transbordos)        
 
 
-
-
-
-
-
+#----------------------------------------------------------------
+#              REQUERIMIENTO 0 
+#----------------------------------------------------------------
 
 def requerimiento_0():
     print("Cargando información de los archivos ....")

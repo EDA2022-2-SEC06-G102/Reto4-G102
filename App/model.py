@@ -25,6 +25,7 @@
  """
 
 from math import radians, cos, sin, asin, sqrt
+from re import S
 import config as cf
 from DISClib.Algorithms.Graphs import dijsktra as djk
 from DISClib.ADT import graph as gr
@@ -85,6 +86,10 @@ def add_carga_bus_edges(model, line_archive):
 
     st_inicio =model.getStationByCode(line_archive["Code"])
     st_final = model.getStationByCode(line_archive["Code_Destiny"])
+
+    st_inicio.addAyacente(st_final.code)
+    st_final.addAyacente(st_inicio.code)
+
     lat1, lon1 = float(st_inicio.latitud), float(st_inicio.longitud)
     lat2, lon2 = float(st_final.latitud) , float(st_final.longitud)
     peso = haversine(lon1, lat1, lon2, lat2)

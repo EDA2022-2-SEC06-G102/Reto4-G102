@@ -97,7 +97,7 @@ class Model:
 
     def getStationsList(self):
         lista =  om.valueSet(self.stations)
-        lista = quicksort.sort(lista,compareStationList)
+        #lista = quicksort.sort(lista,compareStationList)
         return lista
 
     def getStationsSize(self):
