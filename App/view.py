@@ -164,7 +164,7 @@ def imprimirRuta2(lista, origen, destino = None):
             print(element.ljust(10),"Transbordo  ",station)
             transbordos += 1        
         else:
-            print(element, station)        
+            print(element.ljust(10), station)        
         count += 1
     print( " Numero de paradas ",count,"Transbordos:",transbordos)        
 
