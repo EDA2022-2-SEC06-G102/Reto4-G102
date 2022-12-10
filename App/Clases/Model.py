@@ -83,11 +83,15 @@ class Model:
         if pair is None:
             om.put(self.stations, station.code, station)
         else:
+            letras = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N"]
             encontrada = pair["value"]
-            if encontrada.latitud == station.latitud and encontrada.longitud == station.longitud:
-                #print("Estacion mismo codigo latitud diferente ")
+            if encontrada.latitud !=  station.latitud or encontrada.longitud !=  station.longitud:
+                print("Estacion mismo codigo latitud diferente ")
                 station.code = station.code+"A"
+                station.duplicada = True
                 om.put(self.stations, station.code, station)
+            else:
+                encontrada.contador += 1
         
         return station                 
 
@@ -116,8 +120,29 @@ class Model:
         llaves = om.keySet(self.tr_stations)
         return lt.size(llaves)
 
-    def getExclusiveStationsSize(self):        
-        return lt.size(self.ex_stations)
+    def estadisticaCarga(self):
+        exclusiveBusStops = 0 
+        count1 = 0 
+        countT = 0
+        sharedBusStops = 0 
+        countNT = 0
+        countNT1 = 0 
+        list = self.getStationsList()
+        for st in lt.iterator(list):
+            exclusiveBusStops  += st.contador
+            count1 += 1
+            if st.transbordo == "S":
+                countT  += st.contador
+                sharedBusStops += 1
+            else:
+                countNT  += st.contador
+                countNT1 += 1
+        totalBusStops = exclusiveBusStops + sharedBusStops
+        return totalBusStops , exclusiveBusStops , sharedBusStops
+        ##print("--------------> ",exclusiveBusStops, count1)
+        ##print("--------------> ",countT, sharedBusStops)
+        ##print("--------------> ",countNT, countNT1)
+        
 
     def getStationByCode(self, code:str) ->Station:
         pair = om.get(self.stations, code)

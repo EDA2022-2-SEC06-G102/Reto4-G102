@@ -182,10 +182,13 @@ def requerimiento_0():
     answer = controller.Tiempo_de_carga_loadData(file_size, control, memflag=mem)
     printLoadDataAnswer(answer)
     model = getModel(control) 
-    print("Numero total de estaciones:        " , model.getStationsSize())
-    print("Numero de estaciones de transbordo:" , model.getTransbordoStationsSize())
-    print("Numero de estaciones de transbordo:" , model.getTransbordoStationsSize2())
-    print("Numero de estaciones de exclusivas:" , model.getExclusiveStationsSize())
+    print("Estaciones de Bus - Bus Stops")
+    totalBusStops , exclusiveBusStops , sharedBusStops = model.estadisticaCarga()
+    print("Numero de estaciones de exclusivas :" ,exclusiveBusStops)
+    print("Numero de estaciones de transbordo :" , sharedBusStops)
+    print("Total de Estaciones:                ", totalBusStops)
+
+    print("Rutas de Bus")
     print("Numero total de rutas de bus:      " , model.getBusRoutesSize())
     ####print("-----------------------[rutas]-------------------")
     ###printList(model.getBusRoutesList())
@@ -208,7 +211,8 @@ def requerimiento_0():
     lat_min,lon_min, lat_max, lon_max = model.rectanguloBarcelona()
     print("latitud min",lat_min,"longitud min",lon_min, "latitud max",lat_max,"longitud max", lon_max)
     lista = model.getStationsList()
-    print_primeros_y_ultimos(lista,print_station_req0, 5, True)
+    pr5 = print_primeros_y_ultimos(lista,None, 5, True)
+    print_station_req0(pr5)
 
 def print_station_req0(lista):
 

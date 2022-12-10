@@ -13,16 +13,19 @@ def compareStrCodeMap(str1, str2):
 
 class Station:
     def __init__(self, code, latitud:float, longitud:float, district_name:str, neighborhood_name:str, transbordo):
-        self.code = code
-        self.latitud = latitud
-        self.longitud = longitud
-        self.district_name = district_name
+        self.code           = code
+        self.latitud        = latitud
+        self.longitud       = longitud
+        self.district_name  = district_name
         self.neighborhood_name = neighborhood_name
-        self.transbordo = transbordo 
-        self.adyacentes = om.newMap(omaptype='RBT', comparefunction=compareStrCodeMap)
+        self.transbordo     = transbordo 
+        self.adyacentes     = om.newMap(omaptype='RBT', comparefunction=compareStrCodeMap)
+        self.duplicada      = False
+        self.contador       = 1
 
     def distanceTo(self, lon2, lat2):
         return model.haversine(self.longitud, self.latitud, lon2, lat2)
+
 
     def addAyacente(self,code:str):
         om.put(self.adyacentes,code,code)
